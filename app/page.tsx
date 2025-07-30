@@ -11,32 +11,23 @@ import NewsletterSignup from "@/components/ClientsideComponent/NewsletterSignup/
 import TopCategoriesClient from "@/components/ClientsideComponent/TopCategoriesClient/TopCategoriesClient";
 // import PromotionBanner from "@/components/ClientsideComponent/PromotionBanner/PromotionBanner";
 
-import { getBanners } from "@/api/getBannerApi";
-import { fetchCategories } from "@/api/fetchCategories"; // This function's return type needs to be compatible
-import {
-  getGallery,
-  getTestimonials,
-} from "@/api/fetchWhyChooseUs";
-import { getProducts } from "@/api/fetchFeaturedSlider";
 import Counter from "@/components/ClientsideComponent/Counter/counter";
-import { fetchAllTag } from "@/api/fetchProductBySlug";
 import PromotionBanner from "@/components/ClientsideComponent/PromotionBanner/PromotionBanner";
+import { fetchHomePageData } from "@/utils/fetchHomePageData";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const [banners, categoriesResponse, product, testimonials, gallery, tagData, newArrival] =
-    await Promise.all([
-      getBanners(),
-      fetchCategories(),
-      // getWhyChooseUs(),
-      getProducts(6, 1),
-      getTestimonials(),
-      getGallery(),
-      fetchAllTag(),
-      getProducts(10, 1, true),
-    ]);
-  const { categories } = categoriesResponse;
+  const {
+    banners,
+    categories,
+    product,
+    testimonials,
+    gallery,
+    tagData,
+    newArrival,
+  } = await fetchHomePageData();
+  
 
   return (
     <div className="bg-white">
