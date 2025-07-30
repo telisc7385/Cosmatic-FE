@@ -182,7 +182,7 @@ const PaymentMethodPage = () => {
         );
         toast.error("Payment details missing.");
         setPaymentLoading(false);
-        router.push("/checkout"); // Redirect if no payment details
+        router.push("/cart/checkout"); // Redirect if no payment details
       }
     }
   }, [openRazorPay, router]);
@@ -201,7 +201,7 @@ const PaymentMethodPage = () => {
         <div className="text-red-600">
           <p>{paymentError}</p>
           <button
-            onClick={() => router.push("/checkout")}
+            onClick={() => router.push("/cart/checkout")}
             className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md"
           >
             Back to Checkout

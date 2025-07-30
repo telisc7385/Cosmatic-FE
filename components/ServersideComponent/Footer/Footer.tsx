@@ -71,7 +71,7 @@ const Footer = async ({ topCategories, companyDetails }: FooterProps) => {
                 <ul className="space-y-1">
                   {topCategories.map((category) => (
                     <li key={category.id}>
-                      <Link href={`/category/${category.slug}`}>
+                      <Link href={`/shop/${category.slug}`}>
                         <span className="cursor-pointer hover:text-black text-sm">
                           {category.name}
                         </span>
@@ -186,7 +186,7 @@ const Footer = async ({ topCategories, companyDetails }: FooterProps) => {
             <ul className="space-y-2">
               {topCategories.map((category) => (
                 <li key={category.id}>
-                  <Link href={`/category/${category.slug}`}>
+                  <Link href={`/shop/${category.slug}`}>
                     <span className="cursor-pointer hover:text-black text-md">
                       {category.name}
                     </span>

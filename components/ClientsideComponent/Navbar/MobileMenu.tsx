@@ -67,7 +67,7 @@ const MobileMenu = ({ companyDetails }: MobileMenuProps) => {
     setShowCategories(false);
     setExpandedCatId(null);
     setExpandedSubCatId(null);
-    router.push(`/category/${slug}`);
+    router.push(`/shop/${slug}`);
   };
 
   return (

@@ -26,7 +26,7 @@ export async function generateMetadata({
     openGraph: {
       title: category.seo_title || category.name,
       description: category.seo_description || `Shop products in ${category.name}`,
-      url: `/category/${category.slug}`,
+      url: `/shop/${category.slug}`,
 
       images: [
         {

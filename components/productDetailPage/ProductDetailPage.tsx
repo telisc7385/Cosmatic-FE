@@ -189,7 +189,7 @@ export default function ProductDetailClient({
         <div className="max-w-7xl mx-auto">
           <nav className="mb-4 text-sm text-gray-600">
             <Link href="/">Home</Link> / <Link href="/shop">Shop</Link> /{" "}
-            <Link href={`/category/${product.category.id}`}>
+            <Link href={`/shop/${product.category.id}`}>
               {product.category.name}
             </Link>{" "}
             / <span>{product.name}</span>

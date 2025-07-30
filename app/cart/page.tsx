@@ -306,7 +306,7 @@ const CartPage = () => {
     }
 
     if (isLoggedIn) {
-      router.push("/checkout");
+      router.push("/cart/checkout");
     } else {
       setShowAuthPrompt(true);
     }
@@ -314,7 +314,7 @@ const CartPage = () => {
 
   const handleContinueAsGuest = () => {
     setShowAuthPrompt(false);
-    router.push("/checkout");
+    router.push("/cart/checkout");
   };
 
   if (loading && items.length === 0)

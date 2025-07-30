@@ -124,7 +124,7 @@ export default function CategoryInfo({
             <span className="text-[#213E5A]">/</span>
             {category.categoryName && (
               <Link
-                href={`/category/${category.slug}`}
+                href={`/shop/${category.slug}`}
                 className="text-black-600 hover:text-blue-800 underline underline-offset-4 transition-colors duration-200"
               >
                 {category.categoryName}

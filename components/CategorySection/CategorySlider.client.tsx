@@ -55,7 +55,7 @@ export default function CategorySlider({ categories }: Props) {
       >
         {categories.map((cat, index) => (
           <SwiperSlide key={cat.id}>
-            <Link href={`/category/${cat.slug}`} passHref>
+            <Link href={`/shop/${cat.slug}`} passHref>
               <div
                 className="flex-shrink-0
                              w-[calc(100%-20px)] sm:w-[200px] lg:w-[260px]
