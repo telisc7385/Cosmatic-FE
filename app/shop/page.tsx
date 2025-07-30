@@ -1,11 +1,11 @@
 import { fetchCategories } from "@/api/fetchCategories";
-import { getProducts } from "@/api/fetchFeaturedSlider";
+import { getProducts } from "@/api/fetchProductsList";
 import ShopPageClient from "@/components/ClientsideComponent/shopPageClient/shopPageClient";
 import Image from "next/image";
 
 export default async function ShopPage() {
   const { categories } = await fetchCategories();
-  const initialProducts = await getProducts(8, 1)
+  const initialProducts = await getProducts({ limit: 8, page: 1 })
 
   return (
     <div className="flex flex-col gap-4 md:gap-8">

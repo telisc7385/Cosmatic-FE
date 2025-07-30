@@ -8,7 +8,7 @@ import WhyChooseUs from "./WhyChooseUs";
 import OurVision from "./OurVision";
 import Quote from "./Quote";
 import TestimonialsSection from "@/components/TestimonialsSection/TestimonialsSection";
-import { getGallery, getTestimonials } from "@/api/fetchWhyChooseUs";
+import { getGallery, getTestimonials } from "@/api/HomePageApis";
 import OurValues from "./OurValues";
 import OurMission from "./OurMission";
 import GalleryPage from "../ServersideComponent/GalleryPage/GalleryPage";

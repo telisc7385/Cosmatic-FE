@@ -9,6 +9,7 @@ import ProductCard from "@/components/CommonComponents/ProductCard/ProductCard";
 import SortDropdown from "@/components/ClientsideComponent/SortDropdown/SortDropdown";
 import { Category } from "@/types/category";
 import { Product } from "@/types/product";
+import { getProducts } from "@/api/fetchProductsList";
 
 interface Props {
   category: Category;
@@ -55,20 +56,14 @@ export default function CategoryInfo({
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const base = process.env.NEXT_PUBLIC_BASE_URL;
-      const sortParam =
-        sortOrder === "price_asc"
-          ? "selling_price"
-          : sortOrder === "price_desc"
-            ? "-selling_price"
-            : "";
-
-      const url = `${base}/product?is_active=true&page=${currentPage}&limit=${limit}&category_slug=${category.slug
-        }${sortParam ? `&sort=${sortParam}` : ""}`;
-
       try {
-        const res = await fetch(url);
-        const data = await res.json();
+        const data = await getProducts({
+          limit,
+          page: currentPage,
+          sortOrder,
+          category_slug: category.slug
+        });
+        console.log("datacsdc", category.slug)
         setProducts(data.products || []);
         setTotalPages(data.totalPages ?? 1);
       } catch (error) {

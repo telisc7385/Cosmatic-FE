@@ -6,6 +6,8 @@ import SortDropdown from "../SortDropdown/SortDropdown";
 import ProductList from "./ProductList";
 import type { Category } from "@/types/category";
 import { SlidersHorizontal } from "lucide-react";
+import { getProducts } from "@/api/fetchProductsList";
+import { useSearchParams } from "next/navigation";
 
 interface Props {
   categories: Category[];
@@ -28,6 +30,8 @@ export default function ShopPageClient({ categories, initialProducts }: Props) {
   const [initialMaxPrice, setInitialMaxPrice] = useState(
     initialProducts?.maxPrice
   );
+  const searchParams = useSearchParams();
+    const search = searchParams.get("search");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
@@ -36,35 +40,20 @@ export default function ShopPageClient({ categories, initialProducts }: Props) {
   const base = process.env.NEXT_PUBLIC_BASE_URL;
 
   useEffect(() => {
-    const qCats =
-      selectedCats.length > 0
-        ? selectedCats.map((id) => `category=${id}`).join("&")
-        : "";
-    const qSubcats =
-      selectedSubcats.length > 0
-        ? selectedSubcats.map((id) => `subcategory=${id}`).join("&")
-        : "";
-    const qTags =
-      selectedTags.length > 0 ? `tags=${selectedTags.join(",")}` : "";
-    const sortParam =
-      sortOrder === "price_asc"
-        ? "selling_price"
-        : sortOrder === "price_desc"
-        ? "-selling_price"
-        : "";
-
-    const url =
-      `${base}/product?is_active=true&page=${currentPage}&limit=${limit}` +
-      (qCats ? `&${qCats}` : "") +
-      (qSubcats ? `&${qSubcats}` : "") +
-      (qTags ? `&${qTags}` : "") +
-      `&min=${min}&max=${max}` + // use the old bounds here
-      (sortParam ? `&sort=${sortParam}` : "");
-
+   
     const fetchAndUpdateBounds = async () => {
       try {
-        const res = await fetch(url);
-        const data = await res.json();
+        const data = await getProducts({
+          limit,
+          page: currentPage,
+          categories: selectedCats,
+          subcategories: selectedSubcats,
+          tags: selectedTags,
+          min,
+          max,
+          sortOrder,
+          search
+        });
         setProducts(data.products);
         setTotalPages(data.totalPages ?? Math.ceil((data.count ?? 0) / limit));
 
@@ -88,50 +77,10 @@ export default function ShopPageClient({ categories, initialProducts }: Props) {
     sortOrder,
     base,
     currentPage,
+    min,
+    max,
+    search
   ]);
-
-  useEffect(() => {
-    const qCats =
-      selectedCats.length > 0
-        ? selectedCats.map((id) => `category=${id}`).join("&")
-        : "";
-    const qSubcats =
-      selectedSubcats.length > 0
-        ? selectedSubcats.map((id) => `subcategory=${id}`).join("&")
-        : "";
-    const qTags =
-      selectedTags.length > 0 ? `tags=${selectedTags.join(",")}` : "";
-    const sortParam =
-      sortOrder === "price_asc"
-        ? "selling_price"
-        : sortOrder === "price_desc"
-        ? "-selling_price"
-        : "";
-
-    const url =
-      `${base}/product?is_active=true&page=${currentPage}&limit=${limit}` +
-      (qCats ? `&${qCats}` : "") +
-      (qSubcats ? `&${qSubcats}` : "") +
-      (qTags ? `&${qTags}` : "") +
-      `&min=${min}&max=${max}` + // now we use the user‑driven slider values
-      (sortParam ? `&sort=${sortParam}` : "");
-
-    const fetchProducts = async () => {
-      try {
-        const res = await fetch(url);
-        const data = await res.json();
-        setProducts(data.products);
-        setTotalPages(data.totalPages ?? Math.ceil((data.count ?? 0) / limit));
-        // <-- NO setInitialMin/Max calls here
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    const timer = setTimeout(fetchProducts, 300);
-    return () => clearTimeout(timer);
-  }, [min, max, sortOrder, currentPage, base]);
-  console.log("IN SHop", initialMinPrice, initialMaxPrice);
 
   const handleClearFilters = () => {
     setSelectedCats([]);

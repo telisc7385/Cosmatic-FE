@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { fetchHomepageStats } from "@/api/fetchStats";
 import { useInView } from "react-intersection-observer";
 import { motion, useAnimation } from "framer-motion";
 import SectionHeader from "@/components/CommonComponents/SectionHeader";
+import { fetchHomepageStats } from "@/api/HomePageApis";
 
 const Counter = () => {
   const [stats, setStats] = useState<{ title: string; number: number }[]>([]);

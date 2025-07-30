@@ -5,11 +5,10 @@ import "./globals.css";
 import Navbar from "@/components/ServersideComponent/Navbar/NavbarComponent";
 import { Toaster } from "react-hot-toast";
 import Footer from "@/components/ServersideComponent/Footer/Footer";
-import { fetchTopCategories } from "@/api/fetchTopCategories";
 import ReduxProviderWrapper from "@/CartProvider/ReduxProviderWrapper";
-import { getCompanySettings, CompanySettings } from "@/api/CompanyApi";
 import Script from "next/script"; // Import Script component from next/script
-import HomeCoupon from "@/components/ClientsideComponent/HomeCoupon/HomeCoupon";
+import { fetchLayoutPageData } from "@/utils/fetchHomePageData";
+export const dynamic = "force-dynamic";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,10 +38,10 @@ export default async function RootLayout({
   // or used for server-side logic within this layout), you can remove these two lines:
   // If you removed them, the 'authToken' unused variable error will go away.
 
-  const topCategories = await fetchTopCategories();
-  const companySettingsRes = await getCompanySettings();
-  const companyDetails: CompanySettings | undefined =
-    companySettingsRes?.result?.[0];
+  const {
+    topCategories,
+    companyDetails,
+  } = await fetchLayoutPageData();
 
   return (
     <html lang="en">
@@ -70,11 +69,11 @@ export default async function RootLayout({
       >
         <ReduxProviderWrapper>
           <Toaster position="top-center" />
-         
+
           <Navbar companyDetails={companyDetails} />
           <main className="pt-0 bg-white">{children}</main>
           <Footer
-            topCategories={topCategories}
+            topCategories={topCategories?.categories}
             companyDetails={companyDetails}
           />
         </ReduxProviderWrapper>

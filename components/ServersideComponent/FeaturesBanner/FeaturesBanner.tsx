@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { getWhyChooseUs } from "@/api/fetchWhyChooseUs";
+import { getWhyChooseUs } from "@/api/HomePageApis";
 import { WhyChooseUsItem } from "@/types/whyChooseUs";
 import SectionHeader from "@/components/CommonComponents/SectionHeader";
 

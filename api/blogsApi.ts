@@ -1,4 +1,4 @@
-import { BlogsResponse, Blog } from "@/types/blogDataTypes";
+import { BlogsResponse } from "@/types/blogDataTypes";
 import { apiCore } from "./ApiCore";
 
 export async function getPaginatedBlogs(page = 1, pageSize = 12): Promise<BlogsResponse> {

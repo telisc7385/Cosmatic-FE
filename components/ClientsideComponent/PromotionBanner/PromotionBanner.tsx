@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { X } from "lucide-react";
-import { getCouponData } from "@/api/getBannerApi";
+import { getCouponData } from "@/api/getCouponsDataApi";
 import { useSelector } from "react-redux";
 import { selectToken } from "@/store/slices/authSlice";
 import { Coupon } from "@/api/ApiCore";

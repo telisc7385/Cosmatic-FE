@@ -1,5 +1,5 @@
 // api/fetchCategories.ts
-import { apiCore } from "./ApiCore";
+import { apiCore, Product } from "./ApiCore";
 import type { Category } from "@/types/category"; // ✅ Use type-only import
 
 export interface GetCategoriesResponse {

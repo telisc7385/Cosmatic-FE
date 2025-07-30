@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Coupon } from "@/api/ApiCore";
 import { useSelector } from "react-redux";
 import { selectToken, selectIsLoggedIn } from "@/store/slices/authSlice";
-import { getCouponData } from "@/api/getBannerApi";
+import { getCouponData } from "@/api/getCouponsDataApi";
 
 const HomeCoupon: React.FC = () => {
   const token = useSelector(selectToken);

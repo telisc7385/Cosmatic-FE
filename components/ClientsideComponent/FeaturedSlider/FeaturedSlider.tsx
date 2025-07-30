@@ -91,7 +91,7 @@ export default function FeaturedSlider({ products }: { products: Product[] }) {
                       </p>
 
                       <p
-                        className="mt-2 text-gray-700 text-xs sm:text-sm"
+                        className="mt-2 text-gray-700 text-xs sm:text-sm line-clamp-6"
                         dangerouslySetInnerHTML={{
                           __html: product.description,
                         }}

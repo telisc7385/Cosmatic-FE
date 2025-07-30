@@ -7,12 +7,11 @@ import { IoClose } from "react-icons/io5";
 import Image from "next/image";
 import { Product } from "@/types/product";
 import { apiCore } from "@/api/ApiCore";
-import { GetShopResponse } from "@/api/getShop";
+import { getProducts } from "@/api/fetchProductsList";
 
 const SearchBar = () => {
   const [query, setQuery] = useState("");
   const [filtered, setFiltered] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   // 🔄 Live API search on input
@@ -24,18 +23,9 @@ const SearchBar = () => {
     }
 
     const fetchSuggestions = async () => {
-      try {
-        setLoading(true);
-        
-        const url = `/product?is_active=true&page=1&limit=6&search=${query.toString()}`;
-        const res = await apiCore<GetShopResponse>(url, "GET");
-        console.log("🔍 API search results:", res); // Debug log
-        setFiltered(res.products || []);
-      } catch (err) {
-        console.error(" Failed to fetch search suggestions:", err);
-      } finally {
-        setLoading(false);
-      }
+      const res = await getProducts({ limit: 7, page: 1, search: query.toString() })
+
+      setFiltered(res.products || []);
     };
 
     const delayDebounce = setTimeout(() => {
@@ -49,6 +39,7 @@ const SearchBar = () => {
     e.preventDefault();
     if (!query.trim()) return;
     router.push(`/shop?search=${encodeURIComponent(query.trim())}`);
+    setQuery("");
   };
 
   const handleSelect = (slug: string) => {
@@ -121,7 +112,7 @@ const SearchBar = () => {
         </div>
       )}
       {/* Optional: No results */}
-      {query && !loading && filtered.length === 0 && (
+      {query && filtered.length === 0 && (
         <div className="absolute z-50 w-full mt-2 bg-white border rounded-lg shadow px-4 py-2 text-sm text-gray-500">
           No matching products found.
         </div>

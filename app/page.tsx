@@ -39,7 +39,6 @@ export default async function HomePage() {
       <HotListWrapper newArrival={newArrival} />
       <FeaturedSliderComponent product={product?.products} />
       <TopCategoriesClient categories={tagData} type={"tag"} />
-      {/* <TagProductFilter /> */}
       <TestimonialsSection testimonials={testimonials} />
       <GalleryPage gallery={gallery} />
       <NewsletterSignup />

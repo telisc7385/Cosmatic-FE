@@ -1,8 +1,8 @@
+import { getCompanySettings } from "@/api/CompanyApi";
 import { fetchCategories } from "@/api/fetchCategories";
-import { getProducts } from "@/api/fetchFeaturedSlider";
+import { getProducts } from "@/api/fetchProductsList";
 import { fetchAllTag } from "@/api/fetchProductBySlug";
-import { getTestimonials, getGallery } from "@/api/fetchWhyChooseUs";
-import { getBanners } from "@/api/getBannerApi";
+import { getTestimonials, getGallery, getBanners } from "@/api/HomePageApis";
 
 // lib/fetchHomePageData.ts
 export async function fetchHomePageData() {
@@ -17,11 +17,11 @@ export async function fetchHomePageData() {
     ] = await Promise.all([
       getBanners(),
       fetchCategories(),
-      getProducts(6, 1),
+      getProducts({ limit: 6, page: 1 }),
       getTestimonials(),
       getGallery(),
       fetchAllTag(),
-      getProducts(10, 1, true),
+      getProducts({ limit: 10, page: 1, newArrival: true }),
     ]);
   
     return {
@@ -32,6 +32,22 @@ export async function fetchHomePageData() {
       gallery,
       tagData,
       newArrival,
+    };
+  }
+  
+
+  export async function fetchLayoutPageData() {
+    const [
+      topCategories,
+      companySettingsRes,
+    ] = await Promise.all([
+      fetchCategories(),
+      getCompanySettings(),
+    ]);
+  
+    return {
+      topCategories,
+      companyDetails: companySettingsRes?.result?.[0]
     };
   }
   
